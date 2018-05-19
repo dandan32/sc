@@ -13,8 +13,8 @@ import java.util.Map;
  *
  */
 @Data
-public class Request {
-
+public class RequestTask {
+    private String id;
     private HttpMethod method;
     private String url;
     private Map<String, Object> headers;

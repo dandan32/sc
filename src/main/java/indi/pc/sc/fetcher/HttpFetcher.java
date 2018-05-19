@@ -1,6 +1,6 @@
 package indi.pc.sc.fetcher;
 
-import indi.pc.sc.base.Response;
+import indi.pc.sc.base.ResponseTask;
 import indi.pc.sc.base.TaskQueue;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -16,7 +16,7 @@ import org.springframework.http.HttpMethod;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import indi.pc.sc.base.Request;
+import indi.pc.sc.base.RequestTask;
 
 /**
  * Hello world!
@@ -33,10 +33,10 @@ public class HttpFetcher implements Runnable {
         try {
             try {
                 httpclient.start();
-                Request request = null;
-                while ((request = TaskQueue.FetchQueue.take()) != null) {
-                    Response response = doFetch(request);
-                    TaskQueue.ProcessQueue.put(response);
+                RequestTask requestTask = null;
+                while ((requestTask = TaskQueue.FetchQueue.take()) != null) {
+                    ResponseTask responseTask = doFetch(requestTask);
+                    TaskQueue.ProcessQueue.put(responseTask);
                 }
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
@@ -52,15 +52,15 @@ public class HttpFetcher implements Runnable {
 
     /**
      *
-     * @param request
+     * @param requestTask
      * @return
      * @throws Exception
      */
-    public Response fetchonce(Request request) throws Exception {
+    public ResponseTask fetchonce(RequestTask requestTask) throws Exception {
         try {
             httpclient.start();
-            Response response = doFetch(request);
-            return response;
+            ResponseTask responseTask = doFetch(requestTask);
+            return responseTask;
         } catch (InterruptedException ex) {
             ex.printStackTrace();
             return null;
@@ -75,18 +75,18 @@ public class HttpFetcher implements Runnable {
 
     /**
      *
-     * @param request
+     * @param requestTask
      * @return
      * @throws Exception
      */
-    private Response doFetch(Request request) throws Exception{
+    private ResponseTask doFetch(RequestTask requestTask) throws Exception{
         HttpRequestBase trueRequest = null;
-        if (request.getMethod() == HttpMethod.GET) {
-            trueRequest = buildGetRequest(request);
-        } else if (request.getMethod() == HttpMethod.POST) {
-            trueRequest = buildPostRequest(request);
+        if (requestTask.getMethod() == HttpMethod.GET) {
+            trueRequest = buildGetRequest(requestTask);
+        } else if (requestTask.getMethod() == HttpMethod.POST) {
+            trueRequest = buildPostRequest(requestTask);
         } else {
-            throw new Exception(String.format("NOT ALLOW METHOD %s", request.getMethod()));
+            throw new Exception(String.format("NOT ALLOW METHOD %s", requestTask.getMethod()));
         }
 
         RequestConfig requestConfig = RequestConfig.copy(RequestConfig.DEFAULT)
@@ -96,20 +96,20 @@ public class HttpFetcher implements Runnable {
         trueRequest.setConfig(requestConfig);
         Future<HttpResponse> future = httpclient.execute(trueRequest, null);
         HttpResponse trueResponse = future.get();
-        System.out.println("Response: " + trueResponse.getStatusLine());
+        System.out.println("ResponseTask: " + trueResponse.getStatusLine());
         String content = EntityUtils.toString(trueResponse.getEntity());
-        Response response = new Response();
-        response.setContent(content);
-        return response;
+        ResponseTask responseTask = new ResponseTask();
+        responseTask.setContent(content);
+        return responseTask;
     }
 
-    public HttpRequestBase buildGetRequest(Request request) {
-        HttpGet trueRequest = new HttpGet(request.getUrl());
+    public HttpRequestBase buildGetRequest(RequestTask requestTask) {
+        HttpGet trueRequest = new HttpGet(requestTask.getUrl());
         return trueRequest;
     }
 
-    public HttpRequestBase buildPostRequest(Request request) {
-        HttpPost trueRequest = new HttpPost(request.getUrl());
+    public HttpRequestBase buildPostRequest(RequestTask requestTask) {
+        HttpPost trueRequest = new HttpPost(requestTask.getUrl());
         return trueRequest;
 
     }

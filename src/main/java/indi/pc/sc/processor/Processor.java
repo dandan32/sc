@@ -1,7 +1,7 @@
 package indi.pc.sc.processor;
 
-import indi.pc.sc.base.Response;
-import indi.pc.sc.base.Result;
+import indi.pc.sc.base.ResponseTask;
+import indi.pc.sc.base.ResultTask;
 import indi.pc.sc.base.TaskQueue;
 
 public class Processor implements Runnable {
@@ -9,13 +9,13 @@ public class Processor implements Runnable {
     @Override
     public void run() {
         try {
-            Response response = null;
-            while ((response = TaskQueue.ProcessQueue.take()) != null) {
+            ResponseTask responseTask = null;
+            while ((responseTask = TaskQueue.ProcessQueue.take()) != null) {
                 // TODO 处理返回
-                // response
+                // responseTask
                 // TODO 插入结果
-                Result result = null;
-                TaskQueue.ResultQueue.put(result);
+                ResultTask resultTask = null;
+                TaskQueue.resultTaskQueue.put(resultTask);
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
