@@ -19,8 +19,7 @@ public class RequestTask {
     private String url;
     private Map<String, Object> headers;
     private int timeout;
-    private Map<String, Object> params;
-    private Map<String, Object> datas;
+    private RequestData data;
     private Object save;
 
 
