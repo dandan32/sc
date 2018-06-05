@@ -4,10 +4,14 @@ package indi.pc.sc;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@SpringBootApplication
+@Configuration
+@ComponentScan
 public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
