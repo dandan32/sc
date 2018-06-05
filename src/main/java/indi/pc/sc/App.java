@@ -1,5 +1,6 @@
 package indi.pc.sc;
 
+//import indi.pc.sc.web.SCJettyServer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,5 +47,7 @@ class WebRuner implements CommandLineRunner {
     @Override
     public void run(String... var1) throws Exception{
         // do something
+//        SCJettyServer scJettyServer = new SCJettyServer();
+//        scJettyServer.run();
     }
 }

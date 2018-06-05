@@ -2,10 +2,8 @@ package indi.pc.sc.fetcher;
 
 
 import indi.pc.sc.base.RequestData;
-import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
