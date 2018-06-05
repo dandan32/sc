@@ -6,9 +6,19 @@ import java.util.Map;
 
 @Data
 public class RequestData {
-    public static int JSON = 1;
-    public static int KV = 2;
-    public static int FILE = 3;
-    private int type;
+
+    public enum DataType {
+        JSON("JSON", 1), KV("http params",2), FILE("FILE", 3);
+
+        private String name;
+        private int index;
+
+        DataType(String name, int index) {
+            this.name = name;
+            this.index = index;
+        }
+    }
+
+    private DataType dataType;
     private Map<String, String> data;
 }

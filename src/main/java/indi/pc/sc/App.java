@@ -1,19 +1,23 @@
 package indi.pc.sc;
 
-//import indi.pc.sc.web.SCJettyServer;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@ComponentScan
+import indi.pc.sc.web.SCJettyServer;
+
+@ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "indi.pc.sc.web.*")})
 public class App {
+
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication springApplication = new SpringApplication(App.class);
+        springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
+        springApplication.run(args);
     }
 }
 
@@ -21,8 +25,9 @@ public class App {
 @Order(value = 1) // 启动Fetcher 线程
 class FetcherRuner implements CommandLineRunner {
     @Override
-    public void run(String... var1) throws Exception{
+    public void run(String... var1) {
         // do something
+        System.out.println("Fetcher start");
     }
 }
 
@@ -30,8 +35,9 @@ class FetcherRuner implements CommandLineRunner {
 @Order(value = 1) // 启动Processor 线程
 class ProcessorRuner implements CommandLineRunner {
     @Override
-    public void run(String... var1) throws Exception{
+    public void run(String... var1) {
         // do something
+        System.out.println("Processor start");
     }
 }
 
@@ -39,8 +45,9 @@ class ProcessorRuner implements CommandLineRunner {
 @Order(value = 1) // 启动ResultWorker 线程
 class ResultWorkerRuner implements CommandLineRunner {
     @Override
-    public void run(String... var1) throws Exception{
+    public void run(String... var1) {
         // do something
+        System.out.println("ResultWorker start");
     }
 }
 
@@ -48,9 +55,15 @@ class ResultWorkerRuner implements CommandLineRunner {
 @Order(value = 1) // 启动Web监控
 class WebRuner implements CommandLineRunner {
     @Override
-    public void run(String... var1) throws Exception{
-        // do something
-//        SCJettyServer scJettyServer = new SCJettyServer();
-//        scJettyServer.run();
+    public void run(String... var1) {
+        try {
+            //do something
+            SCJettyServer scJettyServer = new SCJettyServer();
+            scJettyServer.run();
+            System.out.println("Web start");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
