@@ -10,7 +10,6 @@ import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Configuration
 @ComponentScan
 public class App {
     public static void main(String[] args) {
