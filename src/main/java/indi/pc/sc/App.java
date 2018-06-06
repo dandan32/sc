@@ -3,6 +3,8 @@ package indi.pc.sc;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import indi.pc.sc.web.SCJettyServer;
 
+@SpringBootConfiguration
+@EnableAutoConfiguration
 @ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "indi.pc.sc.web.*")})
 public class App {
 
