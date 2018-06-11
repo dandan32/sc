@@ -7,6 +7,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.nio.client.methods.HttpAsyncMethods;
 import org.springframework.http.HttpMethod;
 import org.apache.http.HttpHeaders;
+
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -19,9 +21,7 @@ public class RequestTask {
     private String url;
     private Map<String, Object> headers;
     private int timeout;
-    private RequestData data;
-    private Object save;
-
-
-
+    private Map<String, Object> data;
+    private Map<String, Object> attributes;
+    private Method callbackMethod;
 }

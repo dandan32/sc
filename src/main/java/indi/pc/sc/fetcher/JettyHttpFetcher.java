@@ -7,6 +7,7 @@ import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.client.api.Response;
 import org.eclipse.jetty.client.api.Result;
 import org.eclipse.jetty.client.util.BufferingResponseListener;
+import org.eclipse.jetty.client.util.MultiPartContentProvider;
 
 public class JettyHttpFetcher {
 
@@ -38,12 +39,38 @@ public class JettyHttpFetcher {
         // request.header();
         // User-Agent
         // request.agent();
+//        request.param();
+//        request.param();
+        params(); // 参数
+//        request.file();
+//        MultiPartContentProvider multiPart = new MultiPartContentProvider();
+//        multiPart.addFieldPart("field", new StringContentProvider("foo"), null);
+//        multiPart.addFilePart("icon", "img.png", new PathContentProvider(Paths.get("/tmp/img.png")), null);
+//        multiPart.close();
+//        ContentResponse response = client.newRequest("localhost", connector.getLocalPort())
+//                .method(HttpMethod.POST)
+//                .content(multiPart)
+//                .send();
+        request.getParams();
+        request.listener(requestListener);
         request.send(responseListener);
-
+        //
 
     }
 
-    class CustomBufferingResponseListener extends BufferingResponseListener {
+    private void params() {
+
+    }
+
+    private void multipart() {
+
+    }
+
+    class DefaultRequestListener extends Request.Listener.Adapter {
+
+    }
+
+    class DefaultResponseListener extends BufferingResponseListener {
 
         @Override
         public void onComplete(Result result)
