@@ -27,7 +27,9 @@ public class JettyHttpFetcher {
 
     }
 
-    public void doFetch(RequestTask requestTask, Response.CompleteListener listener) {
+    public void doFetch(RequestTask requestTask,
+                        Request.Listener.Adapter requestListener,
+                        Response.Listener.Adapter responseListener) {
         // URL
         Request request = this.httpClient.newRequest(requestTask.getUrl());
         // method
@@ -36,7 +38,8 @@ public class JettyHttpFetcher {
         // request.header();
         // User-Agent
         // request.agent();
-        request.send(listener);
+        request.send(responseListener);
+
 
     }
 
