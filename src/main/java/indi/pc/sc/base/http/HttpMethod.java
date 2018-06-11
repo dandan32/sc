@@ -10,22 +10,29 @@ import org.springframework.lang.Nullable;
  */
 public enum HttpMethod {
     GET,
-    HEAD,
     POST,
+    HEAD,
     PUT,
-    PATCH,
-    DELETE,
     OPTIONS,
-    TRACE;
+    DELETE,
+    TRACE,
+    CONNECT,
+    MOVE,
+    PROXY,
+    PRI;
 
-    private static final Map<String, HttpMethod> mappings = new HashMap(8);
+    private static final Map<String, HttpMethod> mappings = new HashMap(11);
 
     private HttpMethod() {
     }
 
+    public boolean is(String s) {
+        return this.toString().equalsIgnoreCase(s);
+    }
+
     @Nullable
     public static HttpMethod resolve(@Nullable String method) {
-        return method != null ? (HttpMethod)mappings.get(method) : null;
+        return method != null ? (HttpMethod)mappings.get(method.toUpperCase()) : null;
     }
 
     public boolean matches(String method) {

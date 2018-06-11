@@ -1,12 +1,12 @@
 # SC web spider
 
-sc contains three modules: web, fetcher, db.
+sc contains three modules: web, indi.pc.sc.fetcher, db.
 
 ## web
 
 The dashboard console of the spider.
 
-## fetcher
+## indi.pc.sc.fetcher
 
 the http client to fetch the web data.
 
